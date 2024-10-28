@@ -1,6 +1,6 @@
 import mongoose, { InferSchemaType } from "mongoose";
 
-const menuItemSchema = new mongoose.Schema({
+export const menuItemSchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
