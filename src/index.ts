@@ -10,7 +10,20 @@ import orderRoute from "./routes/OrderRoute";
 
 mongoose
   .connect(process.env.MONGODB_CONNECTION_STRING as string)
-  .then(() => console.log("Connected to database!"));
+  .then(() => {
+    console.log("Connected to database!");
+    setInterval(async () => {
+      try {
+        await mongoose.connection.db
+          .collection("restaurants")
+          .findOne({ city: "Delhi" });
+        console.log("made db hot with a pre-fetch req");
+      } catch (error) {
+        console.error(error);
+      }
+    }, 60 * 10 * 1000); // Runs every 5 minutes
+  })
+  .catch((err) => console.error("Database connection error:", err));
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
